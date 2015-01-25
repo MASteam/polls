@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="/poll/new/" method="post" class="well">
+        {% csrf_token %}
+        {% if error %}
+            <div class="alert alert-danger">
+                Произошла ошибка. Возможно неверно были заполнены следующие варианты:
+                {% for i in error %}
+                    {{ i + 1 }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if error2 %}
+			<div class="alert alert-danger">
+				{% for x in error2 %}
+					{{ x }}<br />
+				{% endfor %}
+			</div>
+        {% endif %}
+        <b>Название опроса:</b><br/>
+        <input type="text" value="{{ poll_name }}" name="poll_name" id="" placeholder="Название опроса" class="form-control"/><br/>
+        <b>Варианты ответов:</b><br/>
+
+        <div id="options">
+            {% if not post %}
+                {% for i in options %}
+                    <input id="option_{{ i }}" type="text" name="option[]" placeholder="Вариант №{{ i }}"
+                           class="form-control x"/>
+                {% endfor %}
+            {% else %}
+                {% for key, value in options %}
+                    <input id="option_{{ key + 1 }}" type="text" name="option[]" placeholder="Вариант №{{ key + 1 }}"
+                           class="form-control x" value="{{ value }}"/>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <input type="submit" onclick="addOption(); return false;" value="Добавить вариант" class="btn btn-primary"/>
+        <input type="submit" onclick="deleteOption(); return false;" value="Удалить вариант" class="btn btn-danger"/>
+        <input type="submit" value="Создать" class="btn btn-success"/>
+    </form>
+{% endblock %}

@@ -1,0 +1,30 @@
+body {
+    padding-top: 70px;
+}
+
+span.time {
+    color: green;
+}
+
+.x {
+    margin-bottom: 5px
+}
+
+#captcha_id {
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    width: 162px;
+    border-radius: 4px;
+}
+#captcha_id img {
+    border-radius: 4px;
+}
+
+
+.fl_r {
+    float: right;
+}
+
+.fl_l {
+    float: left;
+}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="/logout/" method="post" class="well">
+        {% csrf_token %}
+        <b>Вы действительно хотите выйти?</b><br/>
+        <input type="submit" value="Да" class="btn btn-danger"/>
+        <input type="submit" onclick="document.location='/'; return false;" value="Нет" class="btn btn-success"/>
+    </form>
+{% endblock %}

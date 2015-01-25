@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form class="well" action="/reg/" method="post">
+        {% if error %}
+            <div class="alert alert-danger">
+                {% for e in error %}
+                    {{ e }}<br/>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <b>Введите ваш ник:</b><br/>
+        <input type="text" name="user" id="user" value="{{ usernick }}" class="form-control"/><br/>
+        <b>Введите ваш пароль:</b><br/>
+        <input type="password" name="pass" id="pass" value="{{ passw }}" class="form-control"/><br/>
+        <b>Повторите ваш пароль:</b><br/>
+        <input type="password" name="pass2" id="pass2" value="{{ passw2 }}" class="form-control"/><br/>
+        <b>Введите ваш e-mail:</b><br/>
+        <input type="text" name="mail" id="" value="{{ email }}" class="form-control"/><br/>
+        <b>Введите код с картинки:</b><br/>
+
+        <div id="captcha_id">
+            <a href="" onclick="captchaRefresh(); return false;"><span id="captcha"><img src="/captcha/" alt=""/></span></a>
+            <br/>
+        </div>
+        <input type="text" name="captcha" id="" value="{{ captcha }}" class="form-control"/><br/>
+        <input type="submit" value="Регистрация" class="btn btn-primary"/><br/>
+    </form>
+{% endblock %}

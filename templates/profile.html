@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Профиль {{ profile.username }}</h3>
+    <img src="http://s.pikabu.ru/images/noavatar64x64_new.gif" alt=""/><br/>
+    Дата регистрации: {{ profile.date_joined }}<br/>
+    {% if profile.first_name %}
+        Имя: {{ profile.first_name }}<br/>
+        {% if profile.last_name %}
+            Фамилия: {{ profile.last_name }}<br/>
+        {% endif %}
+    {% endif %}
+    {% if profile.is_staff %}
+        Администратор polls.chmod.ga<br/>
+    {% endif %}
+    {% if profile.is_superuser %}
+        Суперпользователь<br/>
+    {% endif %}
+    {% if profile.username == user.username %}
+        <a href="/profile/edit/">Редактировать профиль</a><br/>
+    {% endif %}
+    {% if polls.count() > 0 %}
+        <h3>Опросы пользователя:</h3>
+
+        {% for p in polls %}
+            <div class="well">
+                <a href="/poll/{{ p.id }}/">{{ p.name }}</a><br/>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>Пользователь не создавал опросов</h3>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="/auth/" method="post" class="well col-lg-offset-3 col-lg-6" style="text-align: center">
+        {% csrf_token %}
+        <b>Ваш ник:</b><br/>
+        <input type="text" name="user" class="form-control" value=""/>
+        <br/>
+        <b>Ваш пароль:</b><br/>
+        <input type="password" name="pass" value="" id="" class="form-control"/><br/>
+        <input type="submit" class="btn btn-block btn-lg btn-primary" value="Вход"/><br/>
+        <a href="/reset_password/">Забыли пароль?</a>
+    </form>
+{% endblock %}

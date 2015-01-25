@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>{{ poll.name }}</h3>
+    {{ poll.time }}
+    <br/>
+    <style>td {
+        padding: 5px
+    }</style>
+    <br/>
+    <div class="well">
+        {% for o in options %}
+            <div class="fl_r">
+                <a href="/poll/vote/{{ o.id }}/">Голосовать</a>
+            </div>
+            <div class="fl_l">
+                <b>{{ o.name }} ({{ o.count }})</b>
+            </div>
+            <br/>
+            <div class="progress">
+                {% if o.count !=0 and options_c != 0 %}
+                    {% set count = (o.count / options_c * 100)|round(1)|int %}
+                {% else %}
+                    {% set count = 0 %}
+                {% endif %}
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ count }}"
+                     aria-valuemin="0" aria-valuemax="100"
+                     style="width: {{ count }}%;">
+                <span style="color: {% if count == 0.0 %}#000{% endif %}">
+                    {{ count }}%
+                </span>
+                </div>
+                <br/>
+            </div>
+        {% endfor %}
+    </div>
+    <hr/>
+    Создал опрос: <i class="glyphicon glyphicon-user"></i>
+    <a href="/profile/{{ poll.user.username }}/">{{ poll.user.username }}</a>
+    {% if poll.user.id == user.id %}
+        <br/>
+        <i class="glyphicon glyphicon-remove"></i> <a href="/poll/delete/{{ poll.id }}/">Удалить опрос</a>
+    {% endif %}
+    <hr/>
+    <h4>Комментарии:</h4>
+    {% for c in comments %}
+        <div class="well">
+            <i class="glyphicon glyphicon-user"></i> <a href="/profile/{{ c.user.username }}/">{{ c.user.username }}</a>
+            <span class="time">({{ c.time }})</span><br/>
+            {{ c.text }}
+        </div>
+    {% endfor %}
+
+
+    <ul class="pagination">
+        {% if comments.has_previous() %}
+            <li class="disabled"><a href="?p={{ comments.previous_page_number() }}">&laquo;</a></li>
+        {% endif %}
+        {% for i in range(1, comments.paginator.num_pages + 1) %}
+            <li {% if i == comments.number %}class="active"{% endif %}><a href="?p={{ i }}">{{ i }}</a></li>
+        {% endfor %}
+        {% if comments.has_next() %}
+            <li class="disabled"><a href="?p={{ comments.next_page_number() }}">&raquo;</a></li>
+        {% endif %}
+    </ul>
+
+    <form class="well" action="/poll/comment/{{ poll.id }}/?p={{ comments.number }}" method="post">
+        {% csrf_token %}
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <b>Текст:</b><br/>
+        <textarea name="text" id="" rows="6" class="form-control"></textarea>
+        <br/>
+        <input type="submit" value="Написать комментарий" class="btn btn-primary"/>
+    </form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="" style="padding: 20px">
+        <b>Ошибка.</b><br/>
+        {{ error }}<br/>
+        {% if backlink %}<a href="{{ backlink }}">Назад</a><br/>{% endif %}
+        <a href="/">На главную</a>
+    </div>
+{% endblock %}

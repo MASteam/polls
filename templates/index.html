@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="">
+        <h3>Недавние голосования:</h3>
+    </div>
+    {% for p in polls %}
+        <div class="well">
+            <a href="/poll/{{ p.id }}/">{{ p.name }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}
